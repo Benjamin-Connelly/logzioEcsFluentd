@@ -7,6 +7,7 @@ RUN apk add --update --virtual .build-deps \
     fluent-plugin-record-reformer \
     fluent-plugin-record-modifier \
     fluent-plugin-ecs-metadata-filter \
+    fluent-plugin-detect-exceptions \
     && sudo gem sources --clear-all \
     && apk del .build-deps \
     && rm -rf /var/cache/apk/* \
