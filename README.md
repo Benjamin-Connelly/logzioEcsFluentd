@@ -43,8 +43,8 @@ docker run -v /var/lib/docker/containers:/var/lib/docker/containers -v /tmp:/tmp
 
 <b>Configuration<br /></b>
 The fluent.conf file contains configuration and comments which accomplish the following:<br />
-1 - Source to pull the logs from the docker container logs directory
-2 - The ECS plugin which enriches with metadata
-3 - The Google plugin which detects multiline Stacktraces and Exceptions
-4 - A match to update the FluentD tag with the ECS metadata
-4 - FluentD tag pattern matching to route data to Logzio as well as a catch-all account. 
+1 - Source to pull the logs from the docker container logs directory<br />
+2 - The ECS plugin which enriches with metadata<br />
+3 - The Google plugin which detects multiline Stacktraces and Exceptions<br />
+4 - A match to update the FluentD tag with the ECS metadata<br />
+5 - FluentD tag pattern matching to route data to Logzio as well as a catch-all account. 
