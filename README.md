@@ -20,6 +20,7 @@ https://docs.docker.com/config/containers/logging/json-file/<br />
 ``` shell
 docker build -t fluentd_logzio_docker:1.0 https://github.com/Benjamin-Connelly/logzioEcsFluentd.git
 ```
+2.5 - For ECS setup an ECR. When you create one manually there are on-screen instructions or follow the AWSCLI documentation.
 
 3 - Use your favorite secrets manager for `${LogzioToken}``
 
@@ -34,6 +35,11 @@ For AWS SSM and CloudFormation:
 4 - Docker run with a volume mount to the container log directory to read the container logs, a volume mount to /tmp to write the pos_file to the host, environment variables for Logz.io tokens to accounts and sub-accounts and map the network to the localhost in order to access the ECS agent for metadata. Example:<br />
 ```shell 
 docker run --name logzio -v /var/lib/docker/containers:/var/lib/docker/containers -v /tmp:/tmp -e "LOGZ_IO_URL_1=https://listener.logz.io:8071?token=${LogzioToken}" -d --net="host" fluentd_logzio_docker:1.0
+```
+4.5 If using ECR:<br />
+```shell
+$(/usr/local/bin/aws ecr get-login --no-include-email --region us-east-1)
+docker run --name logzio -v /var/lib/docker/containers:/var/lib/docker/containers -v /tmp:/tmp -e "LOGZ_IO_URL_1=https://listener.logz.io:8071?token=${LogzioToken}" -d --net="host" 867872586470.dkr.ecr.us-east-1.amazonaws.com/fluentd_logzio_docker
 ```
 
 You can use the `fluend.conf` to send to multiple Logzio `sub-accounts` if you would like to seperate environments or have a multi-tenant ECS Instance. 
