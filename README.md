@@ -16,7 +16,7 @@ Getting Started<br /></b>
 1 - Make sure the JSON-file logging driver is enabled (this is the default Docker logging driver):
 https://docs.docker.com/config/containers/logging/json-file/<br />
 
-2 - Docker build to build the package:
+2 - Docker build to build the package locally:
 ``` shell
 docker build -t fluentd_logzio_docker:1.0 https://github.com/Benjamin-Connelly/logzioEcsFluentd.git
 ```
@@ -34,10 +34,12 @@ For AWS SSM and CloudFormation:
 
 4 - Docker run with a volume mount to the container log directory to read the container logs, a volume mount to /tmp to write the pos_file to the host, environment variables for Logz.io tokens to accounts and sub-accounts and map the network to the localhost in order to access the ECS agent for metadata. Example:<br />
 ```shell 
+UserData:
 docker run --name logzio -v /var/lib/docker/containers:/var/lib/docker/containers -v /tmp:/tmp -e "LOGZ_IO_URL_1=https://listener.logz.io:8071?token=${LogzioToken}" -d --net="host" fluentd_logzio_docker:1.0
 ```
 4.5 If using ECR:<br />
 ```shell
+UserData:
 $(/usr/local/bin/aws ecr get-login --no-include-email --region us-east-1)
 docker run --name logzio -v /var/lib/docker/containers:/var/lib/docker/containers -v /tmp:/tmp -e "LOGZ_IO_URL_1=https://listener.logz.io:8071?token=${LogzioToken}" -d --net="host" 867872586470.dkr.ecr.us-east-1.amazonaws.com/fluentd_logzio_docker
 ```
